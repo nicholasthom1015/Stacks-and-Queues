@@ -1,5 +1,10 @@
 #include "monty.h"
-
+/**
+ * push - push op
+ * @stack: pointer to pointer
+ * @line_number: line number
+ * Return: none
+ */
 
 void push(stack_t **stack, unsigned int line_number)
 {
@@ -22,10 +27,17 @@ void push(stack_t **stack, unsigned int line_number)
 	nn->n = 0;
 	*stack = nn;
 }
-	
+/**
+ * pop - pop op
+ * @stack: pointer to pointer
+ * @line_number: line number
+ * Return: none
+ */
+
 void pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
+
 	temp = *stack;
 
 	*stack = temp->next;
@@ -40,6 +52,12 @@ void pop(stack_t **stack, unsigned int line_number)
 		printf("L%d: can't pop an empty stack\n", line_number);
 	exit(EXIT_FAILURE);
 }
+/**
+ * pall - pop op
+ * @stack: pointer to pointer
+ * @line_number: line number
+ * Return: none
+ */
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
