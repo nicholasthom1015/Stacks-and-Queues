@@ -62,6 +62,7 @@ void push(stack_t **stack, unsigned int line_number)
  * @line_number: current working line number of Monty bycodes file
  */
 
+
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = (*stack)->next;
