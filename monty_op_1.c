@@ -8,25 +8,70 @@
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *nn;
+	stack_t *tmp, *new;
+	int i;
 
-	nn = malloc(sizeof(stack_t));
-
-	if (!nn)
+	new = malloc(sizeof(stack_t));
+	if (new == NULL)
 	{
-		printf("L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
+		set_op_tok_error(malloc_error());
+		return;
 	}
 
+	if (op_toks[1] == NULL)
+	{
+		set_op_tok_error(no_int_error(line_number));
+		return;
+	}
+
+	for (i = 0; op_toks[1][i]; i++)
+	{
+		if (op_toks[1][i] == '-' && i == 0)
+			continue;
+		if (op_toks[1][i] < '0' || op_toks[1][i] > '9')
+		{
+			set_op_tok_error(no_int_error(line_number));
+			return;
+		}
+	}
+	new->n = atoi(op_toks[1]);
+
+	if (check_mode(*stack) == STACK)
+	{
+		tmp = (*stack)->next;
+		new->prev = *stack;
+		new->next = tmp;
+		if (tmp)
+			tmp->prev = new;
+		(*stack)->next = new;
+	}
+	else
+	{
+		tmp = *stack;
+		while (tmp->next)
+			tmp = tmp->next;
+		new->prev = tmp;
+		new->next = NULL;
+		tmp->next = new;
+	}
+}
+
+/**
+ * pall - prints values of stack_t linked list
+ * @stack: pointer to top mode node of stack_t linked list
+ * @line_number: current working line number of Monty bycodes file
+ */
+
+void pall(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp = (*stack)->next;
+
+	while (tmp)
+	{
+		printf("%d\n", tmp->n);
+		tmp = tmp->next;
+	}
 	(void)line_number;
-
-	if (*stack)
-		(*stack)->prev = nn;
-
-	nn->prev = NULL;
-	nn->next = *stack;
-	nn->n = 0;
-	*stack = nn;
 }
 /**
  * pop - pop op
@@ -52,23 +97,4 @@ void pop(stack_t **stack, unsigned int line_number)
 	else
 		printf("L%d: can't pop an empty stack\n", line_number);
 	exit(EXIT_FAILURE);
-}
-/**
- * pall - pop op
- * @stack: pointer to pointer
- * @line_number: line number
- * Return: none
- */
-void pall(stack_t **stack, unsigned int line_number)
-{
-	stack_t *temp;
-
-
-	(void)line_number;
-	temp = *stack;
-	while (temp)
-	{
-		printf("%d\n", temp->n);
-		temp = temp->next;
-	}
 }
