@@ -18,9 +18,24 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
+<<<<<<< HEAD
 		fprintf(stdder, "L%d: usage: integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+=======
+		printf("L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	(void)line_number;
+
+	if (*stack)
+		(*stack)->prev = nn;
+
+	nn->prev = NULL;
+	nn->next = *stack;
+	nn->n = 0;
+	*stack = nn;
+>>>>>>> b480165cbbe3f3f974ea36aa0612fe428889d551
 }
 /**
  * pop - pop op
@@ -62,9 +77,7 @@ void pall(stack_t **stack, unsigned int line_number)
 	temp = *stack;
 	while (temp)
 	{
-		printf("d\n", temp->n);
+		printf("%d\n", temp->n);
 		temp = temp->next;
 	}
 }
-
-
