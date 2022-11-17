@@ -8,24 +8,17 @@
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *pre;
+	stack_t *nn;
 
-	if (*stack)
+	nn = malloc(sizeof(stack_t));
+
+	if (!nn)
 	{
-		pre = (*stack);
-		*stack = (*stack)->next;
-		free(pre);
+		fprintf(stdder, "Error; malloc failed\n");
+		free_stack(sack);
+		err();
 	}
-	else
-	{
-<<<<<<< HEAD
-		fprintf(stdder, "L%d: usage: integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-=======
-		printf("L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+
 	(void)line_number;
 
 	if (*stack)
@@ -35,7 +28,6 @@ void push(stack_t **stack, unsigned int line_number)
 	nn->next = *stack;
 	nn->n = 0;
 	*stack = nn;
->>>>>>> b480165cbbe3f3f974ea36aa0612fe428889d551
 }
 /**
  * pop - pop op
