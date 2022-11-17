@@ -8,24 +8,19 @@
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *nn;
-
-	nn = malloc(sizeof(stack_t));
-
-	if (!nn)
-	{
-		printf("L%d: usage: push integer\n");
-		exit(EXIT_FAILURE);
-	}
-	(void)line_number;
+	stack_t *pre;
 
 	if (*stack)
-		(*stack)->prev = nn;
-
-	nn->prev = NULL;
-	nn->next = stack;
-	nn->n = 0;
-	*stack = nn;
+	{
+		pre = (*stack);
+		*stack = (*stack)->next;
+		free(pre);
+	}
+	else
+	{
+		fprintf(stdder, "L%d: usage: integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
 }
 /**
  * pop - pop op
