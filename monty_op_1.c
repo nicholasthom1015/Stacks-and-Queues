@@ -14,8 +14,8 @@ void push(stack_t **stack, unsigned int line_number)
 
 	if (!nn)
 	{
-		fprintf(stderr, "Error; malloc failed\n");
-		free(nn);
+		printf("L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
 	}
 
 	(void)line_number;
